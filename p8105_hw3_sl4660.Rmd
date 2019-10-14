@@ -226,3 +226,10 @@ ac2
 ```
 
 Comment:I made the above graph to try to find any trend. But unfortunately Within week one, the general trend is upward from Monday to Sunday. In week two, the general trend is upward. But there is a slight drop on Sunday. In week three, a drop is observed from Monday to Tuseday, then a fluctuation follows. In week four, the general trend is downward. In week five, from Monday to Friday, there is an increase, But I failed to find any solidc general trend between weeks. Because each of them have different trends.
+
+## Third
+```{r}
+ ggplot(accel_data,aes(x=minute,y=activity_count,color=day))+geom_line(aes(group=day))+theme(legend.position = "bottom")
+```
+
+In this graph, I can find the peak of Sunday is different from the peak of other days. The peak of Sunday is around the 600th minute of the day. While peaks of other days(except Sunday) gathers in around 1250th minute. And from 0 minute to 400 minute, there is less activitiy amount because the beginning of the day is sleep time.
