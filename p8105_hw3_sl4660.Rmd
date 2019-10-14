@@ -207,3 +207,22 @@ accel_data
 Describtion: 
 There are `r nrow(read_csv("./data/accel_data.csv"))` days to observe in original dataset, indicating the activity change in each day in 5 weeks. I merged the activities into one variable named "miniute" and input the values of each activity into activty_count.There are six variables after merging. They are week, day_id, day_class, day, minute and activity_count.
 
+## Second 
+```{r,warning=FALSE}
+ac1=accel_data %>% 
+  group_by(week,day) %>% 
+  summarise(total=sum(activity_count)) 
+ac2=pivot_wider(
+  ac1,
+    names_from = "day", 
+  values_from = "total"
+  ) 
+ac2
+  ggplot(ac1,aes(x=day,y=total,color=week))+geom_point()+geom_line(aes(group=week))+ylim(1,400000)+
+   scale_y_continuous(
+    breaks = c(100000,200000,300000,400000), 
+    labels = c("100000","200000","300000","400000")
+    )+theme(legend.position = "bottom")
+```
+
+Comment:I made the above graph to try to find any trend. But unfortunately Within week one, the general trend is upward from Monday to Sunday. In week two, the general trend is upward. But there is a slight drop on Sunday. In week three, a drop is observed from Monday to Tuseday, then a fluctuation follows. In week four, the general trend is downward. In week five, from Monday to Friday, there is an increase, But I failed to find any solidc general trend between weeks. Because each of them have different trends.
