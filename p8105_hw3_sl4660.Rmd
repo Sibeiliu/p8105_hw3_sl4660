@@ -11,3 +11,10 @@ data("instacart")
 library(tidyverse)
 library(ggrepel)
 ```
+
+# Probelm 1
+
+## First
+
+
+In the instacart dataset, there are `r ncol(instacart)` variables, `r nrow(instacart)` observations. The key variables are both order_id and product_id. Because those two can locate a piece of data. Take the first row for example, the user with id 112108, made the order with a product whose id was 49302.The product 49302 was his/her first item to add into cart, which had been reordered before. The order sequence number for this user was 4. The day she/he made this order is on Wed. And the detailed time was at 10:00.It was 9 days since her/his last order. The product--Bulgarian Yogurt is from aisle number120,which was yogurt aisle. And the product was from department number16--dairy eggs.
