@@ -503,6 +503,85 @@ knitr::kable(sub4_4)</code></pre>
 </table>
 <p>Comment: In baking and ingredients aisle, the light brown sugar had the highest amount. Then pure baking soda and cane sugar followed, which had amount od 387,336 respectively. In dog food care aisle, the “Snack Sticks Chicken &amp; Rice Recipe Dog Treats” had the highest amount, 30. Then “Organix Chicken &amp; Brown Rice Recipe” and “Small Dog Biscuits” followed, which had amount od 28,26 respectively. In packaged vegetables fruits aisle, the “Organic Baby Spinach” had the highest amount–9784. Then “Organic Raspberries” and “Organic Blueberries” followed, which had amount od 5546,4966 respectively.</p>
 </div>
+<div id="fourth" class="section level2">
+<h2>Fourth</h2>
+<pre class="r"><code>sub5=instacart %&gt;% 
+  select(product_name,order_dow,order_hour_of_day) %&gt;% 
+  filter(product_name %in% c(&quot;Pink Lady Apples&quot;,&quot;Coffee Ice Cream&quot;)) %&gt;% 
+  mutate(
+    order_dow=recode(order_dow, `0`=&quot;Sun&quot;,`1`=&quot;Mon&quot;,`2`=&quot;Tue&quot;,`3`=&quot;Wed&quot;,`4`=&quot;Thur&quot;,`5`=&quot;Fri&quot;,`6`=&quot;Sat&quot;),
+    order_dow=forcats::fct_relevel(order_dow,c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thur&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;))
+  )  %&gt;% 
+  group_by(product_name,order_dow) %&gt;% 
+  summarise(mean_eachday_week=mean(order_hour_of_day)) %&gt;% 
+  pivot_wider(
+   names_from= product_name,
+    values_from= mean_eachday_week
+  )
+knitr::kable(sub5)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">order_dow</th>
+<th align="right">Coffee Ice Cream</th>
+<th align="right">Pink Lady Apples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mon</td>
+<td align="right">14.31579</td>
+<td align="right">11.36000</td>
+</tr>
+<tr class="even">
+<td align="left">Tue</td>
+<td align="right">15.38095</td>
+<td align="right">11.70213</td>
+</tr>
+<tr class="odd">
+<td align="left">Wed</td>
+<td align="right">15.31818</td>
+<td align="right">14.25000</td>
+</tr>
+<tr class="even">
+<td align="left">Thur</td>
+<td align="right">15.21739</td>
+<td align="right">11.55172</td>
+</tr>
+<tr class="odd">
+<td align="left">Fri</td>
+<td align="right">12.26316</td>
+<td align="right">12.78431</td>
+</tr>
+<tr class="even">
+<td align="left">Sat</td>
+<td align="right">13.83333</td>
+<td align="right">11.93750</td>
+</tr>
+<tr class="odd">
+<td align="left">Sun</td>
+<td align="right">13.77419</td>
+<td align="right">13.44118</td>
+</tr>
+</tbody>
+</table>
+<p>Comment: From Monday to Sunday, the mean hour of ordering coffee and ice cream is 14.3, 15.4, 15.3,15.2, 12.2, 13.8, 13.7 respectively. The time was focused on the beginning of afternoon. From Monday to Sunday, the mean hour of ordering pink lady apples is 11.4, 11.7, 14.3, 11.6, 12.8, 11.9, 13.4 respectively. The time was focused around the noon.</p>
+</div>
+</div>
+<div id="problem2" class="section level1">
+<h1>Problem2</h1>
+<pre class="r"><code>library(p8105.datasets)
+data(&quot;brfss_smart2010&quot;)</code></pre>
+<div id="basic-data-cleaning" class="section level2">
+<h2>Basic data cleaning</h2>
+<pre class="r"><code>sub6=brfss_smart2010 %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(topic==&quot;Overall Health&quot;) %&gt;% 
+ filter(response%in% c(&quot;Excellent&quot;,&quot;Very good&quot;,&quot;Good&quot;,&quot;Fair&quot;,&quot;Poor&quot;)) %&gt;% 
+  mutate(response = forcats::fct_relevel(response, c(&quot;Poor&quot;, &quot;Fair&quot;, &quot;Good&quot;,&quot;Very good&quot;,&quot;Excellent&quot;))) </code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): strings not representable in native encoding
+## will be translated to UTF-8</code></pre>
+</div>
 </div>
 
 

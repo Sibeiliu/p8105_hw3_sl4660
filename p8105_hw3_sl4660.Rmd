@@ -75,3 +75,40 @@ Comment: In baking and ingredients aisle, the light brown sugar had the highest 
 In dog food care aisle, the "Snack Sticks Chicken & Rice Recipe Dog Treats" had the highest amount, 30. Then "Organix Chicken & Brown Rice Recipe" and "Small Dog Biscuits" followed, which had amount od 28,26 respectively.
 In packaged vegetables fruits aisle, the "Organic Baby Spinach" had the highest amount--9784. Then "Organic Raspberries" and "Organic Blueberries" followed, which had amount od 5546,4966 respectively.
 
+## Fourth
+```{r}
+sub5=instacart %>% 
+  select(product_name,order_dow,order_hour_of_day) %>% 
+  filter(product_name %in% c("Pink Lady Apples","Coffee Ice Cream")) %>% 
+  mutate(
+    order_dow=recode(order_dow, `0`="Sun",`1`="Mon",`2`="Tue",`3`="Wed",`4`="Thur",`5`="Fri",`6`="Sat"),
+    order_dow=forcats::fct_relevel(order_dow,c("Mon","Tue","Wed","Thur","Fri","Sat","Sun"))
+  )  %>% 
+  group_by(product_name,order_dow) %>% 
+  summarise(mean_eachday_week=mean(order_hour_of_day)) %>% 
+  pivot_wider(
+   names_from= product_name,
+    values_from= mean_eachday_week
+  )
+knitr::kable(sub5)
+```
+
+
+Comment: From Monday to Sunday, the mean hour of ordering coffee and ice cream is 14.3, 15.4, 15.3,15.2, 12.2, 13.8, 13.7 respectively. The time was focused on the beginning of afternoon.
+From Monday to Sunday, the mean hour of ordering pink lady apples is 11.4, 11.7, 14.3, 11.6, 12.8, 11.9, 13.4 respectively. The time was focused around the noon.
+
+# Problem2
+```{r}
+library(p8105.datasets)
+data("brfss_smart2010")
+```
+
+##  Basic data cleaning
+```{r}
+sub6=brfss_smart2010 %>% 
+  janitor::clean_names() %>% 
+  filter(topic=="Overall Health") %>% 
+ filter(response%in% c("Excellent","Very good","Good","Fair","Poor")) %>% 
+  mutate(response = forcats::fct_relevel(response, c("Poor", "Fair", "Good","Very good","Excellent"))) 
+```
+
