@@ -582,6 +582,57 @@ data(&quot;brfss_smart2010&quot;)</code></pre>
 <pre><code>## Warning in FUN(X[[i]], ...): strings not representable in native encoding
 ## will be translated to UTF-8</code></pre>
 </div>
+<div id="first-1" class="section level2">
+<h2>First</h2>
+<pre class="r"><code>sub7=sub6 %&gt;% 
+  filter(year==2002) %&gt;% 
+  group_by(locationabbr,locationdesc) %&gt;% 
+  summarise(n=n())
+sub8=sub7 %&gt;% 
+  group_by(locationabbr) %&gt;% 
+  summarise(n=n()) %&gt;% 
+ filter(n&gt;6) 
+  sub8</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   locationabbr     n
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 CT               7
+## 2 FL               7
+## 3 MA               8
+## 4 NC               7
+## 5 NJ               8
+## 6 PA              10</code></pre>
+<pre class="r"><code>location1=c(pull(sub8,locationabbr))</code></pre>
+<pre class="r"><code>sub9=sub6 %&gt;% 
+  filter(year==2010) %&gt;% 
+  group_by(locationabbr,locationdesc) %&gt;% 
+  summarise(n=n())
+sub10=sub9 %&gt;% 
+  group_by(locationabbr) %&gt;% 
+  summarise(n=n()) %&gt;% 
+ filter(n&gt;6)  
+ sub10</code></pre>
+<pre><code>## # A tibble: 14 x 2
+##    locationabbr     n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 CA              12
+##  2 CO               7
+##  3 FL              41
+##  4 MA               9
+##  5 MD              12
+##  6 NC              12
+##  7 NE              10
+##  8 NJ              19
+##  9 NY               9
+## 10 OH               8
+## 11 PA               7
+## 12 SC               7
+## 13 TX              16
+## 14 WA              10</code></pre>
+<pre class="r"><code>location2=c(pull(sub10,locationabbr))</code></pre>
+<p>In 2002, CT, FL, MA, NC, NJ, PA have 7 and above locations. In 2010, CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA have 7 and above locations.</p>
+<p>Comment: In 2002, CT, FL, MA, NC, NJ, PA have respectively 7, 7, 8, 7, 8, 10 observations. In 2010, CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA have respectively 12, 7, 41, 9, 12, 12, 10, 19, 9, 8, 7, 7, 16, 10 observations.</p>
+</div>
 </div>
 
 

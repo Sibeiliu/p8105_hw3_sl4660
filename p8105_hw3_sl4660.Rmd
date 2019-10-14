@@ -112,3 +112,36 @@ sub6=brfss_smart2010 %>%
   mutate(response = forcats::fct_relevel(response, c("Poor", "Fair", "Good","Very good","Excellent"))) 
 ```
 
+## First
+```{r}
+sub7=sub6 %>% 
+  filter(year==2002) %>% 
+  group_by(locationabbr,locationdesc) %>% 
+  summarise(n=n())
+sub8=sub7 %>% 
+  group_by(locationabbr) %>% 
+  summarise(n=n()) %>% 
+ filter(n>6) 
+  sub8
+location1=c(pull(sub8,locationabbr))
+
+```
+
+```{r}
+sub9=sub6 %>% 
+  filter(year==2010) %>% 
+  group_by(locationabbr,locationdesc) %>% 
+  summarise(n=n())
+sub10=sub9 %>% 
+  group_by(locationabbr) %>% 
+  summarise(n=n()) %>% 
+ filter(n>6)  
+ sub10
+location2=c(pull(sub10,locationabbr))
+```
+
+In 2002, `r location1` have 7 and above locations.
+In 2010, `r location2` have 7 and above locations.
+
+Comment: In 2002, `r pull(sub8,locationabbr)` have respectively `r pull(sub8,n)` observations.
+In 2010, `r pull(sub10,locationabbr)` have respectively `r pull(sub10,n)` observations.
