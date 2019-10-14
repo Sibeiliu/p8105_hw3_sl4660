@@ -1,0 +1,13 @@
+---
+title: "p8105_hw3_sl4660"
+author: "Sibei Liu"
+date: "2019/10/14"
+output: html_document
+---
+
+```{r initial,message=FALSE}
+library(p8105.datasets)
+data("instacart")
+library(tidyverse)
+library(ggrepel)
+```
