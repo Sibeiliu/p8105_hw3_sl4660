@@ -18,3 +18,26 @@ library(ggrepel)
 
 
 In the instacart dataset, there are `r ncol(instacart)` variables, `r nrow(instacart)` observations. The key variables are both order_id and product_id. Because those two can locate a piece of data. Take the first row for example, the user with id 112108, made the order with a product whose id was 49302.The product 49302 was his/her first item to add into cart, which had been reordered before. The order sequence number for this user was 4. The day she/he made this order is on Wed. And the detailed time was at 10:00.It was 9 days since her/his last order. The product--Bulgarian Yogurt is from aisle number120,which was yogurt aisle. And the product was from department number16--dairy eggs.
+
+```{r}
+aisle_number=n_distinct(select(instacart,aisle_id))
+
+sub1=instacart %>% 
+  group_by(aisle) %>% 
+  summarise(n = n()) 
+
+sub2=mutate(sub1,aisle_ranking = min_rank(desc(n))) %>% 
+  arrange(aisle_ranking)
+ 
+sub2 
+```
+
+
+There are `r nrow(sub2)` aisles.
+The most items are from aisle ``r select(filter(sub2,aisle_ranking==1),aisle)``.
+
+Comment: In the table above, I ranked the aisles according to the ordered items. Then I filter the aisle whose rank is 1.
+
+
+
+

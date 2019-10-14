@@ -378,6 +378,32 @@ library(ggrepel)</code></pre>
 <div id="first" class="section level2">
 <h2>First</h2>
 <p>In the instacart dataset, there are 15 variables, 1384617 observations. The key variables are both order_id and product_id. Because those two can locate a piece of data. Take the first row for example, the user with id 112108, made the order with a product whose id was 49302.The product 49302 was his/her first item to add into cart, which had been reordered before. The order sequence number for this user was 4. The day she/he made this order is on Wed. And the detailed time was at 10:00.It was 9 days since her/his last order. The product–Bulgarian Yogurt is from aisle number120,which was yogurt aisle. And the product was from department number16–dairy eggs.</p>
+<pre class="r"><code>aisle_number=n_distinct(select(instacart,aisle_id))
+
+sub1=instacart %&gt;% 
+  group_by(aisle) %&gt;% 
+  summarise(n = n()) 
+
+sub2=mutate(sub1,aisle_ranking = min_rank(desc(n))) %&gt;% 
+  arrange(aisle_ranking)
+ 
+sub2 </code></pre>
+<pre><code>## # A tibble: 134 x 3
+##    aisle                              n aisle_ranking
+##    &lt;chr&gt;                          &lt;int&gt;         &lt;int&gt;
+##  1 fresh vegetables              150609             1
+##  2 fresh fruits                  150473             2
+##  3 packaged vegetables fruits     78493             3
+##  4 yogurt                         55240             4
+##  5 packaged cheese                41699             5
+##  6 water seltzer sparkling water  36617             6
+##  7 milk                           32644             7
+##  8 chips pretzels                 31269             8
+##  9 soy lactosefree                26240             9
+## 10 bread                          23635            10
+## # ... with 124 more rows</code></pre>
+<p>There are 134 aisles. The most items are from aisle <code>fresh vegetables</code>.</p>
+<p>Comment: In the table above, I ranked the aisles according to the ordered items. Then I filter the aisle whose rank is 1.</p>
 </div>
 </div>
 
