@@ -38,6 +38,20 @@ The most items are from aisle ``r select(filter(sub2,aisle_ranking==1),aisle)``.
 
 Comment: In the table above, I ranked the aisles according to the ordered items. Then I filter the aisle whose rank is 1.
 
+## Second
+```{r}
+sub2%>% 
+  filter(n>10000) %>% 
+  ggplot(aes(x=aisle,y=n,label=n))+geom_bar(stat = "identity")+theme(axis.text.x = element_text(angle = 60, hjust=1))+scale_y_continuous(breaks =                                                      c(10000,2000,30000,40000,50000,60000,70000,80000,120000), 
+    labels = c("10000","20000","30000","40000","50000","60000","70000","80000","120000"))+
+   geom_text(
+    aes(label = n,angle=60),
+    position = position_dodge(0.9),
+    vjust = 0
+  )
+```
+
+Comment:By using the above table to make plot, the fresh fruits and fresh vegitables had the greatest values. Packaged vegitables followed them. The rest of products such as baby food formula, candy chocolate and so on had lower but consistent values.
 
 
 
