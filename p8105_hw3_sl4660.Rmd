@@ -145,3 +145,18 @@ In 2010, `r location2` have 7 and above locations.
 
 Comment: In 2002, `r pull(sub8,locationabbr)` have respectively `r pull(sub8,n)` observations.
 In 2010, `r pull(sub10,locationabbr)` have respectively `r pull(sub10,n)` observations.
+
+## Second
+```{r}
+sub11=sub6 %>% 
+  filter(response=="Excellent")%>% 
+  group_by(locationabbr,year) %>% 
+  mutate(ave=mean(data_value)) %>% 
+ select(year,locationabbr,ave)
+  
+p1=ggplot(sub11,aes(x=year,y=ave, color = locationabbr))+geom_line()+ scale_color_hue(name = "State")
+p1
+```
+
+Comment: The WV state have the lowest value of spaghetti during 2002-2010. And the values of spaghetti in each state were not stable during those years.
+
