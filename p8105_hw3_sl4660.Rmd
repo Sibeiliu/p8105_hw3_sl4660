@@ -53,5 +53,25 @@ sub2%>%
 
 Comment:By using the above table to make plot, the fresh fruits and fresh vegitables had the greatest values. Packaged vegitables followed them. The rest of products such as baby food formula, candy chocolate and so on had lower but consistent values.
 
+## Third
+```{r}
+sub3=instacart %>% 
+  group_by(product_id,aisle_id) %>% 
+  summarize(n=n())
 
+sub4=instacart %>% 
+  group_by(product_name,aisle) %>% 
+  summarize(n=n()) %>%
+group_by(aisle) %>% 
+  mutate(item_ranking_in_each_group = (min_rank(desc(n)))) %>% 
+  arrange(aisle,item_ranking_in_each_group)
+
+sub4_4=sub4 %>% 
+  filter(aisle %in% c("baking ingredients", "dog food care","packaged vegetables fruits")&item_ranking_in_each_group<4 ) 
+knitr::kable(sub4_4)
+```
+
+Comment: In baking and ingredients aisle, the light brown sugar had the highest amount. Then pure baking soda and cane sugar followed, which had amount od 387,336 respectively.
+In dog food care aisle, the "Snack Sticks Chicken & Rice Recipe Dog Treats" had the highest amount, 30. Then "Organix Chicken & Brown Rice Recipe" and "Small Dog Biscuits" followed, which had amount od 28,26 respectively.
+In packaged vegetables fruits aisle, the "Organic Baby Spinach" had the highest amount--9784. Then "Organic Raspberries" and "Organic Blueberries" followed, which had amount od 5546,4966 respectively.
 
