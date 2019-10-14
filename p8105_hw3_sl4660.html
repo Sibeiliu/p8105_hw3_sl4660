@@ -662,6 +662,49 @@ sub12 %&gt;%
 <p>Comment: The Poor response in both 2006 and 2010 had very low values among all locations. The good and very good responses had high values both in 2006 and 2010 in all locations. While the Excellent response, occupied the middle position, not having very high values nor low values in every location.</p>
 </div>
 </div>
+<div id="problem3" class="section level1">
+<h1>Problem3</h1>
+<div id="first-tidy-data" class="section level2">
+<h2>First Tidy data</h2>
+<pre class="r"><code>accel_data=read_csv(&quot;./data/accel_data.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+mutate(day_class=case_when(
+    day %in% c(&quot;Monday&quot;,&quot;Tuesday&quot;,&quot;Wednesday&quot;,&quot;Thursday&quot;,&quot;Friday&quot;)~ &quot;weekday&quot;,
+    day %in% c(&quot;Saturday&quot;,&quot;Sunday&quot;)~ &quot;weekend&quot;,
+    TRUE     ~ &quot;&quot;
+  ))  %&gt;% 
+  mutate(
+    week=as.factor(week),
+    day_id=as.integer(day_id),
+    day=forcats::fct_relevel(day,c(&quot;Monday&quot;,&quot;Tuesday&quot;,&quot;Wednesday&quot;,&quot;Thursday&quot;,&quot;Friday&quot;,&quot;Saturday&quot;,&quot;Sunday&quot;))
+  ) %&gt;% 
+  pivot_longer(
+  activity_1:activity_1440,
+  names_to=&quot;minute&quot;,
+  names_prefix = &quot;activity_&quot;,
+  values_to=&quot;activity_count&quot;
+  ) %&gt;% 
+  mutate(minute= as.numeric(minute)) %&gt;% 
+  arrange(day)
+
+accel_data</code></pre>
+<pre><code>## # A tibble: 50,400 x 6
+##    week  day_id day    day_class minute activity_count
+##    &lt;fct&gt;  &lt;int&gt; &lt;fct&gt;  &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+##  1 1          2 Monday weekday        1              1
+##  2 1          2 Monday weekday        2              1
+##  3 1          2 Monday weekday        3              1
+##  4 1          2 Monday weekday        4              1
+##  5 1          2 Monday weekday        5              1
+##  6 1          2 Monday weekday        6              1
+##  7 1          2 Monday weekday        7              1
+##  8 1          2 Monday weekday        8              1
+##  9 1          2 Monday weekday        9              1
+## 10 1          2 Monday weekday       10              1
+## # ... with 50,390 more rows</code></pre>
+<p>Describtion: There are 35 days to observe in original dataset, indicating the activity change in each day in 5 weeks. I merged the activities into one variable named “miniute” and input the values of each activity into activty_count.There are six variables after merging. They are week, day_id, day_class, day, minute and activity_count.</p>
+</div>
+</div>
 
 
 
